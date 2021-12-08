@@ -1,0 +1,65 @@
+import java.sql.*;
+
+public class Main {
+    static String query;
+    static  ResultSet resultSet;
+    static Connection conexion;
+    static Statement sentencia;
+    public static void main(String[] args) {
+
+        /*
+        DEPARTAMENTOS
+Número de columnas recuperadas: 3
+Columna 1:
+   Nombre: dept_no
+   Tipo: TINYINT
+   Puede ser nula?: NO
+   Máximo ancho de la columna: 2
+Columna 2:
+   Nombre: dnombre
+   Tipo: VARCHAR
+   Puede ser nula?: SI
+   Máximo ancho de la columna: 15
+Columna 3:
+   Nombre: loc
+   Tipo: VARCHAR
+   Puede ser nula?: SI
+   Máximo ancho de la columna: 15
+         */
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            conexion = DriverManager.getConnection("jdbc:mysql://127.0.0.1/test","root","");
+            sentencia = conexion.createStatement();
+
+            cosas("departamentos", sentencia);
+            System.out.println("");
+            cosas("empleados", sentencia);
+
+            resultSet.close();
+            sentencia.close();
+            conexion.close();
+        }catch (Exception e){
+        }
+    }
+
+    public static void cosas(String tabla, Statement sentencia) throws SQLException {
+        query = "SELECT * FROM " + tabla;
+        resultSet = sentencia.executeQuery(query);
+        ResultSetMetaData resultSetMetaData = resultSet.getMetaData();
+
+        System.out.println(tabla);
+        int i = 1;
+        try {
+            System.out.println("Total de columnas:" + resultSetMetaData.getColumnCount());
+            while (true){
+                resultSetMetaData.getColumnType(i); //le obligo a fallar
+                System.out.println("\tcolumna : " + i);
+                System.out.println("\t\tNombre: " + resultSetMetaData.getColumnLabel(i));
+                System.out.println("\t\tTipo: " + resultSetMetaData.getColumnTypeName(i));
+                System.out.println("\t\tNull?: " + (resultSetMetaData.isNullable(i) == 0? "No" : "Si"));
+                System.out.println("\t\tMaximo valor?: " + resultSetMetaData.getColumnDisplaySize(i));
+                i++;
+            }
+        }catch (Exception e){i = 1;}
+    }
+}
