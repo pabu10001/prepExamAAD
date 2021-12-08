@@ -1,4 +1,4 @@
-package JAXB.PruebaXML.Ejercicio1;
+package JAXB.SAX.Ejercicio1;
 
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;

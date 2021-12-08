@@ -1,4 +1,4 @@
-package JAXB.PruebaXML.Ejercicio2;
+package JAXB.SAX.Ejercicio2;
 
 import javax.xml.bind.*;
 import java.io.File;
